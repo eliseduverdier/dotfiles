@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>/text/</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style media="screen">
+        body{
+            font: normal 100 1.5em sans-serif;
+            color:#0E2145;
+        }
+        input{
+            width:15px;height:15px;
+            background:white;
+            border:3px black solid;
+            vertical-align:middle;
+            appearance: none; -moz-appearance: none; -webkit-appearance: none;
+        }
+        span.save{margin:.5em; text-decoration: underline;}
+        span.save:hover, label:hover{color:#ac0; cursor: pointer;}
+        input[type="checkbox"]:checked {background:gray;}
+        input[type="checkbox"]:focus {outline:0;}
+        section{
+            line-height:1.8;
+            max-width:40em;
+            margin:3em auto;
+            border-top:10px #ac0 solid;
+        }
+        section:focus{outline:0; border-top-color:#cf0;}
+    </style>
+</head>
+<body>
+    <input type="checkbox" name="spellcheck" value="spellcheck" id="spellcheck"><label for="spellcheck">spellcheck</label> <br />
+    <input type="checkbox" name="mono" value="mono" id="mono"><label for="mono">mono</label> <br />
+    <span class="save" onclick="save()"> export </span>
+
+    <section contenteditable spellcheck="false">
+    </section>
+
+<script>
+    var section = document.getElementsByTagName('section')[0];
+    section.focus();
+
+    var spellcheck = true;
+    var spellcheckInput = document.getElementsByName('spellcheck')[0];
+    spellcheckInput.addEventListener('change', function(){
+        section.setAttribute('spellcheck', spellcheck)
+        spellcheck = !spellcheck;
+    })
+
+    var mono = true;
+    var monoInput = document.getElementsByName('mono')[0];
+    monoInput.addEventListener('change', function(){
+        section.setAttribute('style', 'font-family: '+(mono ? 'monospace' : 'sans-serif') )
+        mono = !mono;
+    })
+
+    function save(){
+        window.location.href='data:text/html;base64,'+
+                btoa(
+                    (mono ? '<style>body{font-family:monospace;}</style>' : '') +
+                    document.getElementsByTagName('section')[0].innerHTML
+                )
+    }
+</script>
+
+</body>
+
+</html>
