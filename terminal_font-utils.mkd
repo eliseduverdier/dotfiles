@@ -1,0 +1,18 @@
+# fontimage
+Produce a font thumbnail image
+    $ fontimage \[--pixelsize num\] \[--text string\] \[--o outputfile\] Fontfile
+Each \[-- text\] argument creates a new line
+
+
+# image magick
+Allows to manipulate text
+    $ convert -size 600x200 \                             // define size image
+        xc:white \                                  // define background (necessary to create an image)
+        -font Abc-Mono-Mono  \                      // define font (to see available : $ convert -list font)
+        -pointsize 72 \                             // define size
+        -draw "text 20,100 'A little sample'" \     // position and content of the text
+        Abc-Mono-Sample.png                         // output image
+Several options to manipulate the colors, position, rendering of the text.
+
+# fontlint
+Allows to see the errors present in a font (associated with fontforge)
