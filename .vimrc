@@ -52,16 +52,17 @@ set pastetoggle=<F1>    " avoid autoindenting
     " status line:   [buffer nb] |    file path [modified] | [type]    ...  line:col/total   position
     set laststatus=2
     set statusline=
-    set statusline+=\ %n\ \                  " buffer number
+    set statusline+=\ %n\ \ 
     set statusline+=%1*                      " switch highlight
-    set statusline+=\ %30F\ \%m\               " show file and state
-    set statusline+=%*                       " switch back to normal
+    set statusline+=\ %30F\ \%m\             " show file
+    set statusline+=%*                       " switch back to normal statusline highlight
     set statusline+=\ %y\ %=\ %l:%c/%L\ \ %P\    " line:col/total  position
 
 " colors
     " cterm = {bold, underline, reverse, italic, none}
     " for ctermbg and ctermfg list, see :h cterm-colors 
-    hi LineNr       ctermfg=white       cterm=bold
+    " for thins to set up, see :so $VIMRUNTIME/syntax/hitest.vim
+    hi LineNr       ctermfg=white       cterm=bold  
     hi CursorLine   ctermbg=lightgray   cterm=none
     hi Special      ctermfg=DarkYellow  cterm=none  
     hi Constant     ctermfg=Cyan        cterm=none
@@ -75,9 +76,10 @@ set pastetoggle=<F1>    " avoid autoindenting
     hi pythonComment ctermfg=darkgrey
 
     " status line color
-    hi User1        ctermbg=LightGreen  ctermfg=black
-    hi statusline   ctermfg=lightgrey   ctermbg=black
-
+    hi User1        ctermbg=LightGreen  ctermfg=white    cterm=bold
+    hi StatusLine   ctermfg=white       ctermbg=black    cterm=bold
+    hi StatusLineNC ctermfg=white        ctermbg=grey    cterm=none
+    
 " snippets
 " source .vim_snippets
 " 
