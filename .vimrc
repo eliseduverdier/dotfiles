@@ -10,6 +10,7 @@ let mapleader = "²"     " define the leader key
     set smartindent
     set shiftwidth=4
     set softtabstop=4
+    set linebreak
     " set backspace=4
     " set showmatch           " Show matching brackets.
     " set mat=2		  " How many tenth of a second to blink when matching brakets
@@ -26,6 +27,8 @@ set pastetoggle=<F1>    " avoid autoindenting
     vmap <Tab> >gv
     vmap <S-Tab> <gv
     imap <S-Tab> <C-d>
+    nnoremap <Tab> >>
+    nnoremap <S-Tab> <<
 
 """ mapping commands 
     " change syntax
@@ -33,6 +36,11 @@ set pastetoggle=<F1>    " avoid autoindenting
     nnoremap txt :set syntax=<CR>
     nnoremap php :set syntax=php<CR>
     nnoremap xml :set syntax=xml<CR>
+    "  insert line break from normal mode
+    nnoremap <leader>j i<CR><Esc>
+    " change all instances of word under cursor
+    nnoremap <leader>s :%s/\<<C-r><C-w>\>/
+
 
 """ interface
     set cursorline      " highlight current line
@@ -46,8 +54,8 @@ set pastetoggle=<F1>    " avoid autoindenting
     noremap <leader><Right> <ESC><C-w><Right>
 
     " resize the vertical splits
-    noremap <leader>++ :vertical resize +20<CR>
-    noremap <leader>-- :vertical resize -20<CR>
+    noremap <leader>+ :vertical resize +20<CR>
+    noremap <leader>- :vertical resize -20<CR>
 
     " status line:   [buffer nb] |    file path [modified] | [type]    ...  line:col/total   position
     set laststatus=2
