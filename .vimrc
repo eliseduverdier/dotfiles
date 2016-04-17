@@ -36,15 +36,34 @@ set pastetoggle=<F1>    " avoid autoindenting
     nnoremap txt :set syntax=<CR>
     nnoremap php :set syntax=php<CR>
     nnoremap xml :set syntax=xml<CR>
+
     "  insert line break from normal mode
     nnoremap <leader>j i<CR><Esc>
     " change all instances of word under cursor
     nnoremap <leader>s :%s/\<<C-r><C-w>\>/
+    " comment line
+    nnoremap <leader>/ <Esc>^i//<Esc>
 
+    function CommentThoseLines() range
+        if &syn == 'xml' || &syn == 'html'
+            '<s/^\(.*\)$/\<!-- \1/g
+            '>s/^\(.*\)$/\ \1 -->/g
+            return
+        else if &syn == 'vim'
+            let char = '"'
+        elseif &syn == 'apache' || &syn=='python'
+            let char = '#'
+        else
+            let char = '//'
+        endif
+        '<,'>s/^/\=l:char/g        " add the comment characther at the start of the selected lines
+    endfunction
+    vmap <leader>c :call CommentThoseLines()<CR>
 
 """ interface
     set cursorline      " highlight current line
-    set nu              " line numbers
+"    set nu              " line numbers
+"    set relativenumber  " current line is line number, above and below's are relative :)
     set wildmenu        " show files completion
     
     " navigate between splits
