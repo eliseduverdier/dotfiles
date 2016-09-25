@@ -1,0 +1,68 @@
+#########################################
+#                                       #
+#   .bash_aliases  /  common            #
+#                                       #
+#########################################
+
+alias mv='mv -i'
+
+alias l='ls -h1sF --group-directories-first'
+alias ll='ls -lhFB'      # list (more info)
+alias la='ls -lAF'       # show hidden
+alias lt='ls -lrtF'      # sort by last modified
+
+alias cd.='cd ..'
+alias cd..='cd ..'
+alias cd...='cd ../..'
+alias cd....='cd ../../..'
+alias ~='cd ~'
+
+alias diff='diff -u0 -w'
+
+alias svi='sudoedit'
+
+alias du='du -sh'
+alias dusort='du -sh * | sort -hr'
+
+alias inst='sudo apt install'
+alias abspath='readlink -e'
+alias jsonview="python -m json.tool"
+
+mkcd(){
+    mkdir $1 && cd $1
+}
+
+# compile latex doc > convert > remove tmp files > display
+ltx(){ 
+    latex $1 && dvipdf ${1%.tex}.dvi && rmtex
+    evince ${1%.tex}.pdf
+}
+alias deltemp='rm *~'
+alias rmtex='rm *.{aux,dvi,log}'
+
+svg2png () {
+  inkscape -z -e $1.png $1.svg
+}
+ex () {
+  if [ -f $1 ] ; then
+      case $1 in
+          *.tar.bz2)   tar xvjf $1    ;;
+          *.tar.gz)    tar xvzf $1    ;;
+          *.bz2)       bunzip2 $1     ;;
+          *.rar)       unrar x $1     ;;
+          *.gz)        gunzip $1      ;;
+          *.tar)       tar xvf $1     ;;
+          *.tbz2)      tar xvjf $1    ;;
+          *.tgz)       tar xvzf $1    ;;
+          *.zip)       unzip $1       ;;
+          *.Z)         uncompress $1  ;;
+          *.7z)        7z x $1        ;;
+          *.exe)       cabextract $1  ;;
+          *)           echo "'$1': unrecognized file compression" ;;
+      esac
+  else
+      echo "'$1' is not a valid file"
+  fi
+}
+
+alias apacherror="less +F /var/log/apache2/error.log"

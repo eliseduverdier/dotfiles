@@ -1,9 +1,29 @@
+" --------------------------------------------
+"   .vimrc
+" 
+" leader shortcuts:
+"   j : insert line break from normal mode
+"   s : remove trailing spaces
+"   r : change all instances of word under cursor
+"   / : comment line
+"   b : toggle background
+"   c : commentThosLines()
+"   Up, Down, Left, Right : navigate between splits
+"   +, - : resize vertical splits with ± 20 char
+"
+" else:
+"   F3: toggle autoindenting while pasting
+"   <lang>: set syntax according to that language
+" --------------------------------------------
+
+" init {{{
 set nocompatible        "  enable vim features, depending on the terminal
 filetype on             " for syntax
 syntax enable
 let mapleader = "²"     " define the leader key
+" }}}
 
-" autoindenting, with 4 spaces
+" autoindenting, with 4 spaces {{{
     set autoindent
     set expandtab
     set smarttab
@@ -12,101 +32,121 @@ let mapleader = "²"     " define the leader key
     set softtabstop=4
     set linebreak
     " set backspace=4
-    " set showmatch           " Show matching brackets.
+    " set showmatch       " Show matching brackets.
     " set mat=2		  " How many tenth of a second to blink when matching brakets
+" }}}
 
-""" search
+" folds {{{
+setlocal foldmethod=marker
+" }}}
+
+" search {{{
     set ignorecase      " ignore case or search word
     set smartcase       " except when search term uses a capital letter
     set incsearch       " search while typing
     set hlsearch        " highlight all searches
+" }}}
 
-set pastetoggle=<F1>    " avoid autoindenting
+" F# keys {{{
+set pastetoggle=<F3>    " avoid autoindenting
+inoremap <F4> <C-R>=strftime("%F")<CR>
+" }}}
 
-" [un]indent width [tab-]shift
+" mappings {{{
+    " (un)indent with (S)tab
     vmap <Tab> >gv
     vmap <S-Tab> <gv
     imap <S-Tab> <C-d>
     nnoremap <Tab> >>
     nnoremap <S-Tab> <<
 
-""" mapping commands 
+    " autocompletion
+    " imap <Tab> <C-n>
+
     " change syntax
-    nnoremap js :set syntax=javascript<CR>
-    nnoremap txt :set syntax=<CR>
-    nnoremap php :set syntax=php<CR>
-    nnoremap xml :set syntax=xml<CR>
+    nnoremap js   :set syntax=javascript<CR>
+    nnoremap txt  :set syntax=<CR>
+    nnoremap php  :set syntax=php<CR>
+    nnoremap xml  :set syntax=xml<CR>
+    nnoremap html :set syntax=html<CR>
+    nnoremap sh   :set syntax=sh<CR>
+    nnoremap vim  :set syntax=vim<CR>
 
-    "  insert line break from normal mode
+    "  insert line break
     nnoremap <leader>j i<CR><Esc>
-    " change all instances of word under cursor
-    nnoremap <leader>s :%s/\<<C-r><C-w>\>/
-    " comment line
-    nnoremap <leader>/ <Esc>^i//<Esc>
 
+    " remove trailing spaces
+    noremap <leader>s :%s/\s\+$//g<CR>
+    
+    " change all instances of word under cursor
+    nnoremap <leader>r :%s/\<<C-r><C-w>\>/
+    
+    " toggle background
+    noremap <leader>b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+
+    " copy til EOL
+    map Y y$          
+" }}}
+
+" comments {{{
     function CommentThoseLines() range
         if &syn == 'xml' || &syn == 'html'
             '<s/^\(.*\)$/\<!-- \1/g
             '>s/^\(.*\)$/\ \1 -->/g
             return
-        else if &syn == 'vim'
+        elseif &syn=='vim'
             let char = '"'
-        elseif &syn == 'apache' || &syn=='python'
+        elseif &syn=='apache' || &syn=='python' || &syn=='sh'
             let char = '#'
         else
             let char = '//'
         endif
-        '<,'>s/^/\=l:char/g        " add the comment characther at the start of the selected lines
+        '<,'>s/^/\=l:char/g
+        " add the comment characther at the start of the selected lines
     endfunction
+
     vmap <leader>c :call CommentThoseLines()<CR>
-
-""" interface
-    set cursorline      " highlight current line
-"    set nu              " line numbers
-"    set relativenumber  " current line is line number, above and below's are relative :)
-    set wildmenu        " show files completion
     
-    " navigate between splits
-    noremap <leader><Up> <ESC><C-w><Up>
-    noremap <leader><Down> <ESC><C-w><Down>
-    noremap <leader><Left> <ESC><C-w><Left>
-    noremap <leader><Right> <ESC><C-w><Right>
+    " comment line
+    nnoremap <leader>/ <Esc>^i//<Esc>
+" }}}
 
-    " resize the vertical splits
-    noremap <leader>+ :vertical resize +20<CR>
-    noremap <leader>- :vertical resize -20<CR>
+" interface {{{
+set cursorline      " highlight current line
+"set nu              " line numbers
+"set relativenumber  " current line is line number, above and belows are relative :)
+set wildmenu        " show files completion
 
-    " status line:   [buffer nb] |    file path [modified] | [type]    ...  line:col/total   position
-    set laststatus=2
-    set statusline=
-    set statusline+=\ %n\ \ 
-    set statusline+=%1*                      " switch highlight
-    set statusline+=\ %30F\ \%m\             " show file
-    set statusline+=%*                       " switch back to normal statusline highlight
-    set statusline+=\ %y\ %=\ %l:%c/%L\ \ %P\    " line:col/total  position
+" navigate between splits
+noremap <leader><Up> <ESC><C-w><Up>
+noremap <leader><Down> <ESC><C-w><Down>
+noremap <leader><Left> <ESC><C-w><Left>
+noremap <leader><Right> <ESC><C-w><Right>
+
+" resize the vertical splits
+noremap <leader>+ :vertical resize +20<CR>
+noremap <leader>- :vertical resize -20<CR>
+
+" gvim specific
+if has('gui_running')
+  set guifont=agave\ 12
+  colorscheme desert
+endif
+
+" }}}
+
+" sources {{{
+
+" STATUS LINE
+source ~/.vim/status_line.vim
+" bug with Vblock make it disappear
+
+" PLUGINS
+" execute pathogen#infect()
 
 " colors
-    " cterm = {bold, underline, reverse, italic, none}
-    " for ctermbg and ctermfg list, see :h cterm-colors 
-    " for thins to set up, see :so $VIMRUNTIME/syntax/hitest.vim
-    hi LineNr       ctermfg=white       cterm=bold  
-    hi CursorLine   ctermbg=lightgray   cterm=none
-    hi Special      ctermfg=DarkYellow  cterm=none  
-    hi Constant     ctermfg=Cyan        cterm=none
-    hi String       ctermfg=DarkYellow  cterm=none
-    hi Character    ctermfg=Cyan        cterm=none
-    hi Number       ctermfg=Cyan        cterm=none
-    hi MatchParen   ctermbg=Yellow
-    hi Boolean      ctermfg=Cyan        cterm=none
-     
-    hi Comment     ctermfg=darkgrey
-    hi pythonComment ctermfg=darkgrey
+source ~/.vim/colors.vim
 
-    " status line color
-    hi User1        ctermbg=LightGreen  ctermfg=white    cterm=bold
-    hi StatusLine   ctermfg=white       ctermbg=black    cterm=bold
-    hi StatusLineNC ctermfg=white        ctermbg=grey    cterm=none
-    
 " snippets
-" source .vim_snippets
-" 
+source ~/.vim/snippets.vim
+" }}}

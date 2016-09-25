@@ -1,0 +1,30 @@
+echo "Now executing .bash_profile.."
+#########################################
+#                                       #
+#   .bash_profile / executes at login   # 
+#                                       #
+#########################################
+source ~/.bashrc
+
+# ./usr/bin/gnome-keyring-daemon --start --components=gpg
+# ./usr/bin/gnome-keyring-daemon --start --components=ssh
+
+./usr/lib/x86_64-linux-gnu/indicator-application/indicator-application-service
+
+# remmina -i 
+
+sudo service apache2 stop
+
+# Synapse : does not work anymore
+# synapse -s
+
+# mount the Saves partition
+udisksctl mount --block-device /dev/disk/by-uuid/01D666E75C8DBF2A
+ # Comment=(to find UUID: "ls -al /dev/disk/by-uuid"/ )
+
+xbacklight -set 10%
+xpad --no-new
+source ~/.dropbox-dist/dropboxd
+parcellite --no-icon
+redshift -l 43:3 -t 5500:3700
+
