@@ -4,19 +4,6 @@
 #                                       #
 #########################################
 
-### Aliases
-# print to fit
-alias ifit='lpr -o fit-to-page'
-
-#   nav
-# ...
-#   ftp/ssh connections
-# ...
-
-mdview() {
-  markdown "$1" | lynx -stdin
-}
-
 # enable color support 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
