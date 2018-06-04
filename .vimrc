@@ -11,16 +11,16 @@
 "   Up, Down, Left, Right : navigate between splits
 "   +, - : resize vertical splits with ± 20 char
 "
-" else:
 "   F3: toggle autoindenting while pasting
 "   <lang>: set syntax according to that language
 " --------------------------------------------
 
 " init {{{
-set nocompatible        "  enable vim features, depending on the terminal
-filetype on             " for syntax
-syntax enable
-let mapleader = "²"     " define the leader key
+    set nocompatible        "  enable vim features, depending on the terminal
+    filetype on             " for syntax
+    syntax enable
+    set t_Co=256
+    let mapleader = "²"     " define the leader key
 " }}}
 
 " autoindenting, with 4 spaces {{{
@@ -37,7 +37,7 @@ let mapleader = "²"     " define the leader key
 " }}}
 
 " folds {{{
-setlocal foldmethod=marker
+    setlocal foldmethod=marker
 " }}}
 
 " search {{{
@@ -48,8 +48,7 @@ setlocal foldmethod=marker
 " }}}
 
 " F# keys {{{
-set pastetoggle=<F3>    " avoid autoindenting
-inoremap <F4> <C-R>=strftime("%F")<CR>
+    set pastetoggle=<F3>    " avoid autoindenting
 " }}}
 
 " mappings {{{
@@ -71,12 +70,16 @@ inoremap <F4> <C-R>=strftime("%F")<CR>
     nnoremap html :set syntax=html<CR>
     nnoremap sh   :set syntax=sh<CR>
     nnoremap vim  :set syntax=vim<CR>
+    nnoremap mkd  :set syntax=markdown<CR>
 
     "  insert line break
     nnoremap <leader>j i<CR><Esc>
 
     " remove trailing spaces
-    noremap <leader>s :%s/\s\+$//g<CR>
+    " noremap <leader>S :%s/\s\+$//g<CR>
+    
+    " replace all occurences of word under cursor
+    nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
     
     " change all instances of word under cursor
     nnoremap <leader>r :%s/\<<C-r><C-w>\>/
@@ -84,26 +87,29 @@ inoremap <F4> <C-R>=strftime("%F")<CR>
     " toggle background
     noremap <leader>b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
-    " copy til EOL
+    " copy till EOL
     map Y y$          
 " }}}
 
-" comments {{{
-    function CommentThoseLines() range
-        if &syn == 'xml' || &syn == 'html'
-            '<s/^\(.*\)$/\<!-- \1/g
-            '>s/^\(.*\)$/\ \1 -->/g
-            return
-        elseif &syn=='vim'
-            let char = '"'
-        elseif &syn=='apache' || &syn=='python' || &syn=='sh'
-            let char = '#'
-        else
-            let char = '//'
-        endif
-        '<,'>s/^/\=l:char/g
-        " add the comment characther at the start of the selected lines
-    endfunction
+" functions {{{
+    " comments
+    if exists("*s:CommentThoseLines")
+        function CommentThoseLines() range
+            if &syn == 'xml' || &syn == 'html'
+                '<s/^\(.*\)$/\<!-- \1/g
+                '>s/^\(.*\)$/\ \1 -->/g
+                return
+            elseif &syn=='vim'
+                let char = '"'
+            elseif &syn=='apache' || &syn=='python' || &syn=='sh' || &syn=='yml'
+                let char = '#'
+            else
+                let char = '//'
+            endif
+            '<,'>s/^/\=l:char/g
+            " add the comment characther at the start of the selected lines
+        endfunction
+    endif
 
     vmap <leader>c :call CommentThoseLines()<CR>
     
@@ -112,41 +118,50 @@ inoremap <F4> <C-R>=strftime("%F")<CR>
 " }}}
 
 " interface {{{
-set cursorline      " highlight current line
-"set nu              " line numbers
-"set relativenumber  " current line is line number, above and belows are relative :)
-set wildmenu        " show files completion
+    set cursorline      " highlight current line
+    "set nu              " line numbers
+    "set relativenumber  " current line is line number, above and belows are relative :)
+    set wildmenu        " show files completion
 
-" navigate between splits
-noremap <leader><Up> <ESC><C-w><Up>
-noremap <leader><Down> <ESC><C-w><Down>
-noremap <leader><Left> <ESC><C-w><Left>
-noremap <leader><Right> <ESC><C-w><Right>
+    " navigate between splits
+    noremap <leader><Up> <ESC><C-w><Up>
+    noremap <leader><Down> <ESC><C-w><Down>
+    noremap <leader><Left> <ESC><C-w><Left>
+    noremap <leader><Right> <ESC><C-w><Right>
 
-" resize the vertical splits
-noremap <leader>+ :vertical resize +20<CR>
-noremap <leader>- :vertical resize -20<CR>
+    " resize the vertical splits
+    noremap <leader>+ :vertical resize +20<CR>
+    noremap <leader>- :vertical resize -20<CR>
 
-" gvim specific
-if has('gui_running')
-  set guifont=agave\ 12
-  colorscheme desert
-endif
-
+    " gvim specific
+    if has('gui_running')
+      set guifont=agave\ 12
+    endif
+    
+    " colors
+    " source ~/.vim/colors.vim
+    colorscheme desert
+    set background=light
+    " colorscheme solarized
 " }}}
 
 " sources {{{
+    " STATUS LINE
+    source ~/.vim/status_line.vim
 
-" STATUS LINE
-source ~/.vim/status_line.vim
-" bug with Vblock make it disappear
+    " snippets
+    source ~/.vim/snippets.vim
+" }}}
 
-" PLUGINS
-" execute pathogen#infect()
+" plugins {{{
+"   set rtp+=~/.vim/bundle/Vundle.vim
+"   call vundle#begin()
+"   Plugin 'VundleVim/Vundle.vim'
+"   Plugin 'scrooloose/nerdtree'
+"   Plugin 'tpope/vim-surround'
+"   "Plugin 'morhetz/gruvbox'
+"   "   colorscheme gruvbox
 
-" colors
-source ~/.vim/colors.vim
-
-" snippets
-source ~/.vim/snippets.vim
+"   call vundle#end()            " required
+"   filetype plugin indent on    " required
 " }}}

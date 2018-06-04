@@ -1,1 +1,110 @@
-/home/elise/.aliases
+#########################################
+#                                       #
+#        .aliases                       #
+#                                       #
+#########################################
+
+### basic
+alias mv='mv -i'
+alias cp='cp -i'
+
+alias .='source'
+
+alias l='ls -h1sF --group-directories-first'    # default
+alias ll='ls -lhF --group-directories-first'    # list
+alias la='ls -Ah1sF --group-directories-first'  # hidden
+alias lt='ls -lrtF'                             # last modified
+
+mkcd(){
+    mkdir $1 && cd $1
+}
+# nav
+alias cd.='cd ..'
+alias cd..='cd ..'
+alias cd...='cd ../..'
+alias cd....='cd ../../..'
+alias ~='cd ~'
+alias cd-='cd -'
+alias cd--='cd -2'
+alias cd---='cd -3'
+
+alias diff='diff -u0 -w'
+
+alias du='du -sh'
+alias dusort='du -sh * | sort -hr'
+
+# short
+alias inst='sudo apt install'
+alias abspath='readlink -e'
+alias jsonview="python -m json.tool"
+mdview() {
+  markdown "$1" | lynx -stdin
+}
+alias fourwords="grep '^[a-z]*$' /usr/share/dict/british-english|shuf| head -n4"
+
+# specific
+alias ifit='lpr -o fit-to-page'     # print and fit
+alias deltemp='rm *~'
+alias rmtex='rm *.{aux,dvi,log}'
+ltx(){  # compile latex, convert, delete tmp, show
+    latex $1 && dvipdf ${1%.tex}.dvi && rmtex && evince ${1%.tex}.pdf
+}
+alias apacherror="less +F /var/log/apache2/error.log"
+svg2png () {
+  inkscape -z -e $1.png $1.svg
+}
+ex () { # stolen from (?)
+  if [ -f $1 ] ; then
+      case $1 in
+          *.tar.bz2)   tar xvjf $1    ;;
+          *.tar.gz)    tar xvzf $1    ;;
+          *.bz2)       bunzip2 $1     ;;
+          *.rar)       unrar x $1     ;;
+          *.gz)        gunzip $1      ;;
+          *.tar)       tar xvf $1     ;;
+          *.tbz2)      tar xvjf $1    ;;
+          *.tgz)       tar xvzf $1    ;;
+          *.zip)       unzip $1       ;;
+          *.Z)         uncompress $1  ;;
+          *.7z)        7z x $1        ;;
+          *.exe)       cabextract $1  ;;
+          *)           echo "'$1': unrecognized file compression" ;;
+      esac
+  else
+      echo "'$1' is not a valid file"
+  fi
+}
+
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias less='less -r'
+    alias ls='ls --color=always'
+    alias grep='grep --color=always'
+    alias fgrep='fgrep --color=always'
+    alias egrep='egrep --color=always'
+fi
+alias svi='sudoedit'
+alias :e='vim'
+alias theme='vi ~/.oh-my-zsh/themes/_me.zsh-theme'
+alias aliases='vi ~/.aliases'
+alias zshrc='vi ~/.zshrc'
+alias vimrc='vi ~/.vimrc'
+
+############
+# metafont #
+############
+mfconvert(){
+    mf "$1" && gftodvi "$1".2602gf && evince "$1".dvi
+}
+showgf(){
+    gftodvi "$1".2602gf && evince "$1".dvi
+}
+mftoltx(){
+    mf "\mode=localfont; input $1.mf" && gftopk $1.600gf $1.600pk
+}
+f(){find . -name "$1"}
+alias nom="npm"
+alias gcm='git commit -m'
+alias sf='php bin/console'
