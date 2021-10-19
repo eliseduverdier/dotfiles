@@ -1,53 +1,92 @@
-<!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>/text/</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
-    <style media="screen">
-    * {
-        background:white;
-        font-family: 'Space Mono', monospace; 
-        line-height: 1.2em;
-        appearance: none; -moz-appearance: none; -webkit-appearance: none;
-    }
-    section{
-        padding: 1em;
-        border-top: 5px #ccc solid;
-        vertical-align: top;
-    }
-    section:focus{ outline:0; border-top-color: #cf0;}
-    input{
-        width:15px;height:15px;
-        border:3px black solid;
-        vertical-align:middle;
-    }
-    input[type="checkbox"]:checked {background:gray;}
-    input[type="checkbox"]:focus {outline:0;}
-    button#save{background:black;color:white;padding:1em;border:0;}
-    button#save:hover, label:hover{color:#eee;cursor:pointer;}
+    <style>
+        body, button, input { font: normal 18px monospace; color: white; background: DarkSlateGrey; }
+        article { padding: 4vh 8vh; height: 80%; }
+        article:focus, input:focus { outline: 0 }
+        button, input { border: 0; padding: 5px; }
+        input { border-bottom: 3px solid #C6C91C; }
+        button { box-shadow: 5px 5px 0px 0px #C6C91C; border-radius: 50%; }
+        ul, li { margin: 0; padding: 0; }
+        ul { list-style: none; margin: 4vh; }
+        li:hover { background: SlateGrey }
+        main { display: grid; grid-template-columns: 200px 1fr; }
     </style>
 </head>
+
 <body>
-    <input type="checkbox" name="spellcheck" value="spellcheck" id="spellcheck"><label for="spellcheck">spellcheck</label> <br />
-    <button id="save" onclick="save()" title="You will be able to bookmark the link to save your text"> export </button>
+    <button id="delete">delete</button>
+    <button id="save">save as</button>
+    <input type="text" name="filename">
 
-    <section contenteditable spellcheck="false" />
+    <main>
+        <ul></ul>
+        <article contenteditable></article>
+    </main>
 
-    <script>
-        var section = document.getElementsByTagName('section')[0];
-        section.focus();
+    <script type="text/javascript">
+        const key = 'notes'
+        let activeKey = key;
 
-        var spellcheck = true;
-        var spellcheckInput = document.getElementsByName('spellcheck')[0];
-        spellcheckInput.addEventListener('change', function(){
-            section.setAttribute('spellcheck', spellcheck)
-            spellcheck = !spellcheck;
+        const article = document.querySelector('article')
+        const ul = document.querySelector('ul')
+
+        article.innerHTML = localStorage[key] ? localStorage[key] : '…'
+        article.focus()
+
+        // load files
+        Object.keys(localStorage).sort().forEach(item => {
+            li = document.createElement('li')
+            let filename = item.replace('notes', '')
+            li.innerHTML = filename === '' ? '...' : filename
+            li.setAttribute('data-key', key + filename)
+            ul.appendChild(li)
         })
-        function save(){
-            window.location.href='data:text/html;base64,'+ btoa( document.documentElement.innerHTML )
-        }
+
+        // save file
+        article.addEventListener('keyup', function (e) {
+            localStorage[activeKey] = article.innerHTML
+        });
+
+        // add new file
+        document.querySelector('#save').addEventListener('click', function (e) {
+            filename = document.querySelector('input[name=filename]').value
+            li = document.createElement('li')
+            // TODO check duplicates
+            // TODO warning if exists
+            li.innerHTML = '.' + filename
+            li.setAttribute('data-key', key + filename)
+            ul.appendChild(li)
+
+            localStorage[key + '.' + filename] = article.innerHTML
+        });
+
+        // read and select files
+        document.querySelectorAll('li').forEach(li => li.addEventListener('click', function (e) {
+            activeKey = e.target.dataset.key
+            console.log('activeKey: ' + activeKey)
+            if (localStorage[activeKey]) {
+                article.innerHTML = localStorage[activeKey]
+            } else { // default
+                activeKey = key
+                article.innerHTML = localStorage[key]
+            }
+        }))
+
+        // delete files / reset
+        document.querySelector('#delete').addEventListener('click', function (e) {
+            if (activeKey === key) { // don't delete default
+                article.innerHTML = ''
+                localStorage[key] = ''
+            } else {
+                // delete current file if active
+                localStorage.removeItem(activeKey)
+                document.querySelector(`li[data-key="${activeKey}"]`).remove()
+            }
+        });
     </script>
+
 </body>
+
 </html>
