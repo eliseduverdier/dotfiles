@@ -1,84 +1,98 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGkVORK5CYII=" />
+    <title>📎️</title>
     <style>
-        body, button, input { font: normal 18px monospace; color: white; background: DarkSlateGrey; }
+        :root { --dark: rgb(24, 0, 51); --accent: rgb(0, 160, 120); }
+        body, button, input { font: normal 18px 'Space Mono', monospace; color: var(--dark); background: white; }
         article { padding: 4vh 8vh; height: 80%; }
         article:focus, input:focus { outline: 0 }
         button, input { border: 0; padding: 5px; }
-        input { border-bottom: 3px solid #C6C91C; }
-        button { box-shadow: 5px 5px 0px 0px #C6C91C; border-radius: 50%; }
+        input { border-bottom: 3px solid var(--accent); }
+        button { border: 1px solid var(--accent); box-shadow: 2px 2px 0px 0px var(--accent); }
+        button:hover { background: var(--accent); }
         ul, li { margin: 0; padding: 0; }
+        li { padding: 8px; }
         ul { list-style: none; margin: 4vh; }
-        li:hover { background: SlateGrey }
+        li:hover, li.active { background: var(--accent); color: white; }
+        li.active { font-weight: bold; }
         main { display: grid; grid-template-columns: 200px 1fr; }
     </style>
-</head>
-
+</head> 
 <body>
     <button id="delete">delete</button>
     <button id="save">save as</button>
     <input type="text" name="filename">
-
     <main>
-        <ul></ul>
+        <ul>
+        </ul>
         <article contenteditable></article>
     </main>
-
     <script type="text/javascript">
         const key = 'notes'
         let activeKey = key;
-
         const article = document.querySelector('article')
         const ul = document.querySelector('ul')
 
         article.innerHTML = localStorage[key] ? localStorage[key] : '…'
         article.focus()
 
+        // init if no file
+        if (!localStorage) { localStorage[key] = '…' }
         // load files
         Object.keys(localStorage).sort().forEach(item => {
             li = document.createElement('li')
             let filename = item.replace('notes', '')
             li.innerHTML = filename === '' ? '...' : filename
+            if (filename === '') li.classList += 'active'
             li.setAttribute('data-key', key + filename)
             ul.appendChild(li)
         })
 
         // save file
-        article.addEventListener('keyup', function (e) {
-            localStorage[activeKey] = article.innerHTML
-        });
+        article.addEventListener('keyup', function (e) { localStorage[activeKey] = article.innerHTML });
 
         // add new file
         document.querySelector('#save').addEventListener('click', function (e) {
-            filename = document.querySelector('input[name=filename]').value
+            filename = '.' + document.querySelector('input[name=filename]').value
             li = document.createElement('li')
             // TODO check duplicates
             // TODO warning if exists
-            li.innerHTML = '.' + filename
+            li.innerHTML = filename
             li.setAttribute('data-key', key + filename)
+            initFileChanger(li)
             ul.appendChild(li)
 
-            localStorage[key + '.' + filename] = article.innerHTML
+            localStorage[key + filename] = article.innerHTML
         });
 
         // read and select files
-        document.querySelectorAll('li').forEach(li => li.addEventListener('click', function (e) {
-            activeKey = e.target.dataset.key
-            console.log('activeKey: ' + activeKey)
-            if (localStorage[activeKey]) {
-                article.innerHTML = localStorage[activeKey]
-            } else { // default
-                activeKey = key
-                article.innerHTML = localStorage[key]
-            }
-        }))
+        const initFileChanger = function (li) {
+            li.addEventListener('click', function (e) {
+                // change active file
+                let active = document.querySelector('li.active')
+                if (active) active.removeAttribute('class')
+                e.target.classList += 'active'
+                // get new file
+                activeKey = e.target.dataset.key
+                if (localStorage[activeKey]) {
+                    article.innerHTML = localStorage[activeKey]
+                } else { // default
+                    activeKey = key
+                    article.innerHTML = localStorage[key]
+                }
+            })
+        }
+        document.querySelectorAll('li').forEach(li => initFileChanger(li))
 
         // delete files / reset
         document.querySelector('#delete').addEventListener('click', function (e) {
-            if (activeKey === key) { // don't delete default
-                article.innerHTML = ''
-                localStorage[key] = ''
+            if (activeKey === key) {
+                article.innerHTML = '…'
             } else {
                 // delete current file if active
                 localStorage.removeItem(activeKey)
@@ -86,7 +100,5 @@
             }
         });
     </script>
-
 </body>
-
 </html>
