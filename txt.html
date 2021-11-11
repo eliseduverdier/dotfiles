@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGkVORK5CYII=" />
+    <link rel="icon" type="image/png" sizes="16x16" />
     <title>📎️</title>
+
     <style>
-        :root { --dark: rgb(24, 0, 51); --accent: rgb(0, 160, 120); }
-        body, button, input { font: normal 18px 'Space Mono', monospace; color: var(--dark); background: white; }
-        article { padding: 4vh 8vh; height: 80%; }
-        article:focus, input:focus { outline: 0 }
-        button, input { border: 0; padding: 5px; }
-        input { border-bottom: 3px solid var(--accent); }
-        button { border: 1px solid var(--accent); box-shadow: 2px 2px 0px 0px var(--accent); }
-        button:hover { background: var(--accent); }
-        ul, li { margin: 0; padding: 0; }
-        li { padding: 8px; }
-        ul { list-style: none; margin: 4vh; }
-        li:hover, li.active { background: var(--accent); color: white; }
-        li.active { font-weight: bold; }
-        main { display: grid; grid-template-columns: 200px 1fr; }
+        :root { --primary: rgb(211, 211, 211); --accent: rgb(9, 140, 5); --accent-txt: #d7c004; --bg: #222; } body, button, input { font: normal 14px 'JetBrains Mono', monospace; color: var(--primary); background: var(--bg); } input, button { border: 0; } input { background-color: var(--accent-txt); color: var(--bg); } article { padding: 4vh 8vh; height: 80%; } article:focus, input:focus { outline: 0 } .red, button#delete:hover { color: red; } .green, button#new:hover { color: var(--accent); } .red, button#delete:hover { color: red; } main { display: grid; grid-template-columns: 200px 1fr; } li:hover, li.active { font-weight: bold; color: var(--accent); } li:hover { cursor: pointer; opacity: .8; } ul { list-style: none; margin: 0; padding: 0; } li { margin: 0; padding: 5px 10px; } main { margin-top: 20px; }
     </style>
-</head> 
+</head>
+
 <body>
-    <button id="delete">delete</button>
-    <button id="save">save as</button>
-    <input type="text" name="filename">
+    <div>
+        ▶ new❪<input type="text" name="filename">❫
+        <button id="new"> →</button>
+    </div>
+    <div>
+        ▶ <span class="red">×</span><button id="delete">delete</button>
+    </div>
+
     <main>
         <ul>
         </ul>
+
         <article contenteditable></article>
     </main>
+
     <script type="text/javascript">
+        // fun with favicon
+        let emoji = '📎️'
+
+        function setFavicon(emoji) {
+            let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><text dx="-8" dy="48" x="10" y="10">${emoji}</text><style><![CDATA[text{font-size: 64px;}]]></style ></svg>`
+            document.querySelector('link[rel="icon"]').setAttribute('href', 'data:image/svg+xml;utf8,' + svg)
+        }
+        setFavicon(emoji)
+        // --------------
         const key = 'notes'
-        let activeKey = key;
+        let activeKey = key
+
         const article = document.querySelector('article')
         const ul = document.querySelector('ul')
 
@@ -57,8 +64,12 @@
         article.addEventListener('keyup', function (e) { localStorage[activeKey] = article.innerHTML });
 
         // add new file
-        document.querySelector('#save').addEventListener('click', function (e) {
-            filename = '.' + document.querySelector('input[name=filename]').value
+        function createFile(filename) {
+            filename = '.' + filename;
+            if (localStorage.hasOwnProperty(key + filename)) {
+                alert("Name already exists!")
+                return
+            }
             li = document.createElement('li')
             // TODO check duplicates
             // TODO warning if exists
@@ -67,24 +78,37 @@
             initFileChanger(li)
             ul.appendChild(li)
 
-            localStorage[key + filename] = article.innerHTML
-        });
+            localStorage[key + filename] = '...'
+            changeFile(li)
+            e.target.value = ''
+        }
+        document.querySelector('input[name = "filename"]').addEventListener('keyup', function (e) {
+            if (e.keyCode === 13) { createFile(e.target.value) }
+        })
+
+        document.querySelector('#new').addEventListener('click', function (e) {
+            filename = document.querySelector('input[name=filename]').value
+            createFile(filename)
+        })
+
+        const changeFile = function (li) {
+            // change active file
+            let active = document.querySelector('li.active')
+            if (active) active.removeAttribute('class')
+            li.classList += 'active' // get new file
+            activeKey = li.dataset.key
+            if (localStorage.hasOwnProperty(activeKey)) {
+                article.innerHTML = localStorage[activeKey]
+            } else { // default
+                activeKey = key
+                article.innerHTML = localStorage[key]
+            }
+        }
 
         // read and select files
         const initFileChanger = function (li) {
             li.addEventListener('click', function (e) {
-                // change active file
-                let active = document.querySelector('li.active')
-                if (active) active.removeAttribute('class')
-                e.target.classList += 'active'
-                // get new file
-                activeKey = e.target.dataset.key
-                if (localStorage[activeKey]) {
-                    article.innerHTML = localStorage[activeKey]
-                } else { // default
-                    activeKey = key
-                    article.innerHTML = localStorage[key]
-                }
+                changeFile(e.target)
             })
         }
         document.querySelectorAll('li').forEach(li => initFileChanger(li))
@@ -98,7 +122,8 @@
                 localStorage.removeItem(activeKey)
                 document.querySelector(`li[data-key="${activeKey}"]`).remove()
             }
-        });
+        })
     </script>
 </body>
+
 </html>
