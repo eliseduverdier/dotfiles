@@ -4,9 +4,18 @@
 #                                       #
 #########################################
 
+### docker
+alias dc='docker-compose'
+
+### git
+pushu() {
+    git push -u origin $(git branch --show-current)
+}
+alias gs='gst' # ghostscript typo
+
 ### basic
-alias mv='mv -i'
-alias cp='cp -i'
+#alias mv='mv -i' # warn about overriding
+#alias cp='cp -i'
 
 alias .='source'
 
@@ -15,7 +24,7 @@ alias ll='ls -lhF --group-directories-first'    # list
 alias la='ls -Ah1sF --group-directories-first'  # hidden
 alias lt='ls -lrtF'                             # last modified
 
-mkcd(){
+mkcd() {
     mkdir $1 && cd $1
 }
 # nav
@@ -40,7 +49,7 @@ alias jsonview="python -m json.tool"
 mdview() {
   markdown "$1" | lynx -stdin
 }
-alias fourwords="grep '^[a-z]*$' /usr/share/dict/british-english|shuf| head -n4"
+alias passphrase="grep '^[a-z]*$' /usr/share/dict/british-english|shuf| head -n4|tr '\n' ' '"
 
 # specific
 alias ifit='lpr -o fit-to-page'     # print and fit
@@ -49,7 +58,6 @@ alias rmtex='rm *.{aux,dvi,log}'
 ltx(){  # compile latex, convert, delete tmp, show
     latex $1 && dvipdf ${1%.tex}.dvi && rmtex && evince ${1%.tex}.pdf
 }
-alias apacherror="less +F /var/log/apache2/error.log"
 svg2png () {
   inkscape -z -e $1.png $1.svg
 }
@@ -104,7 +112,11 @@ showgf(){
 mftoltx(){
     mf "\mode=localfont; input $1.mf" && gftopk $1.600gf $1.600pk
 }
-f(){find . -name "$1"}
+
+############
+# etc      #
+############
+#f(){find . -name "$1"}
 alias nom="npm"
-alias gcm='git commit -m'
 alias sf='php bin/console'
+alias ccat='highlight -O ansi'
