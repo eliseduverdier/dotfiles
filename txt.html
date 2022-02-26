@@ -9,7 +9,22 @@
     <title>📎️</title>
 
     <style>
-        :root { --primary: rgb(211, 211, 211); --accent: rgb(9, 140, 5); --accent-txt: #d7c004; --bg: #222; } body, button, input { font: normal 14px 'JetBrains Mono', monospace; color: var(--primary); background: var(--bg); } input, button { border: 0; } input { background-color: var(--accent-txt); color: var(--bg); } article { padding: 4vh 8vh; height: 80%; } article:focus, input:focus { outline: 0 } .red, button#delete:hover { color: red; } .green, button#new:hover { color: var(--accent); } .red, button#delete:hover { color: red; } main { display: grid; grid-template-columns: 200px 1fr; } li:hover, li.active { font-weight: bold; color: var(--accent); } li:hover { cursor: pointer; opacity: .8; } ul { list-style: none; margin: 0; padding: 0; } li { margin: 0; padding: 5px 10px; } main { margin-top: 20px; }
+        :root { --primary: rgb(211, 211, 211); --accent: rgb(9, 140, 5); --accent-txt: #d7c004; --bg: #222; }
+        body, button, input { font: normal 14px 'JetBrains Mono', monospace; color: var(--primary); background: var(--bg); }
+        input, button { border: 0; }
+        input { background-color: var(--accent-txt); color: var(--bg); }
+        article { padding: 4vh 8vh; height: 80%; }
+        article:focus, input:focus { outline: 0 }
+        .yellow, button#export:hover { color: var(--accent-txt); }
+        .red, button#delete:hover { color: red; }
+        .green, button#new:hover { color: var(--accent); }
+        .red, button#delete:hover { color: red; }
+        main { display: grid; grid-template-columns: 200px 1fr; }
+        li:hover, li.active { font-weight: bold; color: var(--accent); }
+        li:hover { cursor: pointer; opacity: .8; }
+        ul { list-style: none; margin: 0; padding: 0; }
+        li { margin: 0; padding: 5px 10px; }
+        main { margin-top: 20px; }
     </style>
 </head>
 
@@ -20,6 +35,9 @@
     </div>
     <div>
         ▶ <span class="red">×</span><button id="delete">delete</button>
+    </div>
+    <div>
+        ▶ <span class="yellow">↓</span><button id="export">export</button>
     </div>
 
     <main>
@@ -122,6 +140,20 @@
                 localStorage.removeItem(activeKey)
                 document.querySelector(`li[data-key="${activeKey}"]`).remove()
             }
+        })
+
+        // export
+        document.querySelector('#export').addEventListener('click', function (e) {
+            const content = JSON.stringify(localStorage)
+
+            var downloadElement = document.createElement('a');
+            downloadElement.style.display = 'none';
+            downloadElement.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(content));
+            downloadElement.setAttribute('download', 'notes_export.json');
+
+            document.body.appendChild(downloadElement);
+            downloadElement.click();
+            document.body.removeChild(downloadElement);
         })
     </script>
 </body>
