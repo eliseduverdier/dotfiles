@@ -1,0 +1,96 @@
+:root {
+    --primary: rgb(211, 211, 211);
+    --accent: rgb(9, 140, 5);
+    --accent-txt: #d7c004;
+    --bg: #222;
+}
+
+body,
+button,
+input {
+    font: normal 14px 'JetBrains Mono', monospace;
+    color: var(--primary);
+    background: var(--bg);
+}
+
+input,
+button {
+    border: 0;
+}
+
+input {
+    background-color: var(--accent-txt);
+    color: var(--bg);
+}
+
+pre { padding: 4vh 8vh; height: 80%; white-space: pre; }
+
+pre:focus,
+input:focus {
+    outline: 0
+}
+
+.yellow,
+button#export:hover {
+    color: var(--accent-txt);
+}
+
+.red,
+button#delete:hover {
+    color: red;
+}
+
+.green,
+button#new:hover {
+    color: var(--accent);
+}
+
+.red,
+button#delete:hover {
+    color: red;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+}
+
+li:hover,
+li.active {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+li:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 0;
+    padding: 5px 10px;
+}
+
+main {
+    margin-top: 20px;
+}
+
+
+div#notification[hidden] {
+    display: block;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+div#notification {
+bottom:0;right:0;position:absolute;
+background-color: var(--accent-txt);
+color: var(--bg);
+padding: 10px;
+}
