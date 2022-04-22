@@ -3,8 +3,12 @@
     --accent: rgb(9, 140, 5);
     --accent-txt: #d7c004;
     --bg: #222;
+    --red: rgb(185, 7, 7);
 }
 
+/************************
+ *   COLORS             *
+*************************/
 body,
 button,
 input {
@@ -13,59 +17,55 @@ input {
     background: var(--bg);
 }
 
-input,
-button {
-    border: 0;
+input, button { border: 0; }
+
+input { background-color: var(--accent-txt); color: var(--bg); }
+
+pre { padding: 2vh 4vh; height: 80%; white-space: pre; overflow: scroll; }
+@media (min-width: 800px) {/* desktop */
+    pre {border-top: 3px solid var(--accent-txt);}
 }
+pre:focus, input:focus { outline: 0 }
 
-input {
-    background-color: var(--accent-txt);
-    color: var(--bg);
-}
+.yellow, button#export:hover { color: var(--accent-txt); }
+.green, button#new:hover { color: var(--accent); }
+.red, button#delete:hover { color: var(--red); }
 
-pre { padding: 4vh 8vh; height: 80%; white-space: pre; }
 
-pre:focus,
-input:focus {
-    outline: 0
-}
+/************************
+ *   LAYOUT/MENU        *
+*************************/
+@media (max-width: 800px) { /* mobile */
+  ul.tabs {
+    max-height: 100px;
+    overflow: scroll;
+    border-top: 3px solid var(--accent-txt);
+    border-bottom: 3px solid var(--accent-txt);
+    padding: 10px;
+    margin: 5px;
+  }
+  ul.tabs li {
+    display: inline;
+    padding: 10px;
 
-.yellow,
-button#export:hover {
+  }
+  ul.tabs:after{
+    content: ' ↬ ';
+    position: absolute;
+    right: 0;
+    font-size: 3em;
     color: var(--accent-txt);
-}
-
-.red,
-button#delete:hover {
-    color: red;
-}
-
-.green,
-button#new:hover {
-    color: var(--accent);
-}
-
-.red,
-button#delete:hover {
-    color: red;
-}
-
-main {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-}
-
-li:hover,
-li.active {
     font-weight: bold;
-    color: var(--accent);
+    top: 64px;
+  }
 }
-
-li:hover {
-    cursor: pointer;
-    opacity: .8;
+@media (min-width: 800px) { /* desktop */
+    main {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        margin-top: 20px;
+    }
 }
-
 ul {
     list-style: none;
     margin: 0;
@@ -76,12 +76,18 @@ li {
     margin: 0;
     padding: 5px 10px;
 }
-
-main {
-    margin-top: 20px;
+li:hover {
+    cursor: pointer;
+    opacity: .8;
+}li:hover, li.active {
+    font-weight: bold;
+    color: var(--accent);
 }
 
 
+/*****************
+ *   NOTIFS      *
+******************/
 div#notification[hidden] {
     display: block;
     opacity: 0;
@@ -89,8 +95,11 @@ div#notification[hidden] {
 }
 
 div#notification {
-bottom:0;right:0;position:absolute;
-background-color: var(--accent-txt);
-color: var(--bg);
-padding: 10px;
+    bottom:0;
+    right:0;
+    position:absolute;
+    background-color:
+    var(--accent-txt);
+    color: var(--bg);
+    padding: 10px;
 }

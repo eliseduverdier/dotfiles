@@ -1,4 +1,6 @@
-
+/**
+ * Manage key tab to insert 4 spaces and indent blocks of text
+ */
 article.addEventListener('keydown', function (e) {
     if (e.key === 'Tab') {
         console.log('tab !', e.target.innerHTML);

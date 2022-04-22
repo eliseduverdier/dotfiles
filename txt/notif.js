@@ -1,3 +1,7 @@
+/**
+ * Shows information
+ */
+
 function showNotification(text) {
     let notification = document.querySelector('#notification')
     notification.innerHTML = text

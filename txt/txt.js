@@ -1,13 +1,8 @@
+/**
+ * Manage files by writing/reading localStorage
+ *
+ */
 
-// fun with favicon
-let emoji = '📎️'
-
-function setFavicon(emoji) {
-    let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><text dx="-8" dy="48" x="10" y="10">${emoji}</text><style><![CDATA[text{font-size: 64px;}]]></style ></svg>`
-    document.querySelector('link[rel="icon"]').setAttribute('href', 'data:image/svg+xml;utf8,' + svg)
-}
-setFavicon(emoji)
-// --------------
 const key = 'notes'
 let activeKey = key
 
@@ -19,7 +14,10 @@ article.focus()
 
 // init if no file
 if (!localStorage) { localStorage[key] = '…' }
-// load files
+
+/**
+ * ========================================== LOAD FILES
+ */
 Object.keys(localStorage).sort().forEach(item => {
     li = document.createElement('li')
     let filename = item.replace('notes', '')
@@ -29,10 +27,14 @@ Object.keys(localStorage).sort().forEach(item => {
     ul.appendChild(li)
 })
 
-// save file
+/**
+ * ========================================== SAVE FILE
+ */
 article.addEventListener('keyup', function (e) { localStorage[activeKey] = article.innerHTML });
 
-// add new file
+/**
+ * ========================================== ADD NEW FILE
+ */
 function createFile(filename) {
     filename = '.' + filename;
     if (localStorage.hasOwnProperty(key + filename)) {
@@ -61,9 +63,10 @@ document.querySelector('#new').addEventListener('click', function (e) {
 })
 
 const changeFile = function (li) {
-    // change active file
+    // remove old active file
     let active = document.querySelector('li.active')
     if (active) active.removeAttribute('class')
+    // set new li as active
     li.classList += 'active' // get new file
     activeKey = li.dataset.key
     if (localStorage.hasOwnProperty(activeKey)) {
@@ -74,7 +77,9 @@ const changeFile = function (li) {
     }
 }
 
-// read and select files
+/**
+ * ========================================== READ AND SELECT FILES
+ */
 const initFileChanger = function (li) {
     li.addEventListener('click', function (e) {
         changeFile(e.target)
@@ -82,7 +87,9 @@ const initFileChanger = function (li) {
 }
 document.querySelectorAll('li').forEach(li => initFileChanger(li))
 
-// delete files / reset
+/**
+ * ========================================== DELETE FILES / RESET
+ */
 document.querySelector('#delete').addEventListener('click', function (e) {
     if (activeKey === key) {
         article.innerHTML = '…'
@@ -93,7 +100,9 @@ document.querySelector('#delete').addEventListener('click', function (e) {
     }
 })
 
-// export
+/**
+ * ========================================== EXPORT
+ */
 document.querySelector('#export').addEventListener('click', function (e) {
     const content = JSON.stringify(localStorage)
 
