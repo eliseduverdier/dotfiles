@@ -103,3 +103,14 @@ div#notification {
     color: var(--bg);
     padding: 10px;
 }
+
+/*****************
+ *   ACTIONS      *
+******************/
+button#import input {
+    display: none;
+}
+
+button#import:hover input {
+    display: inline;
+}

@@ -96,22 +96,10 @@ document.querySelector('#delete').addEventListener('click', function (e) {
     } else {
         // delete current file if active
         localStorage.removeItem(activeKey)
-        document.querySelector(`li[data-key="${activeKey}"]`).remove()
+        elementToRemove = document.querySelector(`li[data-key="${activeKey}"]`)
+        if (elementToRemove)
+            elementToRemove.remove()
+        else
+            showNotification('No note selected !')
     }
-})
-
-/**
- * ========================================== EXPORT
- */
-document.querySelector('#export').addEventListener('click', function (e) {
-    const content = JSON.stringify(localStorage)
-
-    var downloadElement = document.createElement('a');
-    downloadElement.style.display = 'none';
-    downloadElement.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(content));
-    downloadElement.setAttribute('download', 'notes_export.json');
-
-    document.body.appendChild(downloadElement);
-    downloadElement.click();
-    document.body.removeChild(downloadElement);
 })
