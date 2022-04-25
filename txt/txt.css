@@ -72,18 +72,18 @@ ul {
     padding: 0;
 }
 
-li {
+ul.tabs li {
     margin: 0;
     padding: 5px 10px;
 }
-li:hover {
+ul.tabs li:hover {
     cursor: pointer;
     opacity: .8;
-}li:hover, li.active {
+}
+ul.tabs li:hover, ul.tabs li.active {
     font-weight: bold;
     color: var(--accent);
 }
-
 
 /*****************
  *   NOTIFS      *
@@ -104,6 +104,15 @@ div#notification {
     padding: 10px;
 }
 
+#shortcuts {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20%;
+    padding: 100px;
+    background: var(--accent-txt);
+    color: black;
+}
 /*****************
  *   ACTIONS      *
 ******************/
