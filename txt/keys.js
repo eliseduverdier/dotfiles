@@ -7,20 +7,26 @@
 document.addEventListener('keydown', e => {
     if (e.ctrlKey && e.key === 's') {
         showNotification('Saved !')
+        e.preventDefault()
     } else if (e.ctrlKey && e.key === 'ArrowUp') {
         switchToPreviousTab()
+        e.preventDefault()
     } else if (e.ctrlKey && e.key === 'ArrowDown') {
         switchToNextTab()
+        e.preventDefault()
     } else if (e.key === 'Tab') {
         insertFourSpaces()
+        e.preventDefault()
     } else if (e.ctrlKey && e.key === 'e') {
         frameText()
+        e.preventDefault()
     } else if (e.ctrlKey && e.key === '?') {
         showShortcuts()
+        e.preventDefault()
     } else if (e.key === 'Escape') {
         hideShortcuts()
+        e.preventDefault()
     }
-    e.preventDefault()
 });
 
 
