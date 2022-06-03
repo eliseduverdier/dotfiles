@@ -21,7 +21,11 @@ input, button { border: 0; }
 
 input { background-color: var(--accent-txt); color: var(--bg); }
 
-pre { padding: 2vh 4vh; height: 80%; white-space: pre; overflow: scroll; }
+pre {
+    padding: 2vh 4vh;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+}
 @media (min-width: 800px) {/* desktop */
     pre {border-top: 3px solid var(--accent-txt);}
 }
@@ -47,7 +51,6 @@ pre:focus, input:focus { outline: 0 }
   ul.tabs li {
     display: inline;
     padding: 10px;
-
   }
   ul.tabs:after{
     content: ' ↬ ';
@@ -84,7 +87,10 @@ ul.tabs li:hover, ul.tabs li.active {
     font-weight: bold;
     color: var(--accent);
 }
-
+nav {
+    display: grid;
+    grid-template-rows: 30px 1fr;
+}
 /*****************
  *   NOTIFS      *
 ******************/
