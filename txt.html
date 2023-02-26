@@ -13,16 +13,19 @@
 <body>
     <nav>
         <div>
+            ▶ <span class="yellow">↻</span><button id="synchronize">synchronize</button>
+        </div>
+        <div>
             ▶ new❪<input type="text" name="filename">❫
             <button id="new"> →</button>
         </div>
         <div>
             ▶ <span class="red">×</span><button id="delete">delete</button>
         </div>
-        <div>
+        <!--<div>
             ▶ <span class="yellow">↑</span><button id="export">export</button>
             ▶ <span class="yellow">↯</span><button id="import">import <input type="file" id="file-selector" accept="application/json" name="import"></button>
-        </div>
+        </div>-->
     </nav>
 
     <main>
@@ -42,11 +45,12 @@
     </div>
 
     <script type="text/javascript" src="txt/show_info.js"> </script>
-    <script type="text/javascript" src="txt/txt.js"> </script>
+    <script type="text/javascript" src="txt/delay.js"> </script>
+    <script type="text/javascript" src="txt-database/txt-sql.js"> </script>
     <script type="text/javascript" src="txt/nav.js"> </script>
     <script type="text/javascript" src="txt/keys.js"> </script>
     <script type="text/javascript" src="txt/favicon.js"> </script>
-    <script type="text/javascript" src="txt/export.js"> </script>
+<!--    <script type="text/javascript" src="txt/export.js"> </script>-->
 </body>
 
 </html>

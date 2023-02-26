@@ -39,6 +39,11 @@ pre:focus, input:focus { outline: 0 }
 /************************
  *   LAYOUT/MENU        *
 *************************/
+body {
+    height: 97vh;
+    display: grid;
+    grid-template-rows: 60px 1fr;
+}
 @media (max-width: 800px) { /* mobile */
   ul.tabs {
     max-height: 100px;
@@ -52,7 +57,7 @@ pre:focus, input:focus { outline: 0 }
     display: inline;
     padding: 10px;
   }
-  ul.tabs:after{
+  ul.tabs:after {
     content: ' ↬ ';
     position: absolute;
     right: 0;
@@ -71,8 +76,9 @@ pre:focus, input:focus { outline: 0 }
 }
 ul {
     list-style: none;
-    margin: 0;
     padding: 0;
+    margin: 14px 10px 0 0;
+    border-top: 3px solid var(--accent-txt);
 }
 
 ul.tabs li {
@@ -87,10 +93,6 @@ ul.tabs li:hover, ul.tabs li.active {
     font-weight: bold;
     color: var(--accent);
 }
-nav {
-    display: grid;
-    grid-template-rows: 30px 1fr;
-}
 /*****************
  *   NOTIFS      *
 ******************/
@@ -100,27 +102,22 @@ div#notification[hidden] {
     transition: opacity 1s;
 }
 
-div#notification {
-    bottom:0;
-    right:0;
-    position:absolute;
-    background-color:
-    var(--accent-txt);
-    color: var(--bg);
-    padding: 10px;
-}
-
-#shortcuts {
+#shortcuts, div#notification{
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
     top: 20%;
-    padding: 100px;
+    padding: 30px;
     background: var(--accent-txt);
     color: black;
 }
+
+#shortcuts {
+    padding: 100px;
+}
+
 /*****************
- *   ACTIONS      *
+ *   ACTIONS     *
 ******************/
 button#import input {
     display: none;

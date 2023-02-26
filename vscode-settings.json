@@ -1,0 +1,230 @@
+{
+  "editor.fontFamily": "'Victor Mono', 'JetBrains Mono', monospace",
+  "editor.fontLigatures": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.detectIndentation": false,
+  "editor.formatOnPaste": true, //     CHANGE THERE ON PERSO PROJECT
+  "editor.wordWrap": "on",
+  "editor.wordWrapColumn": 140,
+  "editor.inlineSuggest.enabled": true,
+  "editor.quickSuggestions": {
+    "comments": "off",
+    "strings": "off",
+    "other": "off"
+  },
+
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "files.autoSave": "onWindowChange",
+  "files.trimTrailingWhitespace": true,
+  "html.format.wrapLineLength": 200,
+  "prettier.printWidth": 200,
+  "rainbow_csv.autodetection_min_line_count": 2,
+  "rainbow_csv.csv_lint_detect_trailing_spaces": true,
+  "redhat.telemetry.enabled": false,
+  "security.workspace.trust.enabled": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "telemetry.telemetryLevel": "off",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.pinnedTabSizing": "compact",
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.editor.wrapTabs": true,
+  "workbench.editorAssociations": {
+    "git-rebase-todo": "default"
+},
+  "workbench.tree.indent": 12,
+
+  "github.copilot.enable": {
+    "*": false,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": false,
+    "ruby": false,
+    "jsonc": false
+  },
+
+  //  =============================================== GIT ===============================================
+  "gitlens.currentLine.enabled": false,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.blame.avatars": false,
+  "gitlens.codeLens.enabled": false,
+  "gitlens.currentLine.format": "${author, }${date}${' via 'pullRequest}${ • message|50?}",
+  "gitlens.defaultDateFormat": "YY-MM-DD HH:mm",
+  "gitlens.defaultDateShortFormat": "YY-MM-DD",
+  "gitlens.defaultTimeFormat": " HH:mm",
+  "gitlens.hovers.avatars": false,
+  "gitlens.hovers.enabled": false,
+  "gitlens.blame.compact": false,
+  "gitlens.blame.format": "${author|10?} ${message|10?} ${agoOrDate|14-}",
+  "gitlens.menus": false,
+  "gitlens.statusBar.enabled": false,
+  "gitlens.blame.highlight.locations": ["overview", "gutter", "line"],
+  "scm.diffDecorationsGutterWidth": 5,
+  "scm.diffDecorationsGutterVisibility": "always",
+
+  /// etc
+
+  ///  =============================================== Languages ===============================================
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[makefile]": {
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": false
+  },
+
+  // PHP
+  "php.suggest.basic": false,
+  "php.validate.run": "onType",
+  "php-cs-fixer.rules": "@PhpCsFixer",
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.formatOnSave": true
+  },
+
+  // RUBY
+  // "[ruby]": {
+  //     "editor.defaultFormatter": "mbessey.vscode-rufo",
+  //     "editor.formatOnSave": true
+  // },
+  // "ruby.rubocop.executePath": "~/.rbenv/shims/",
+  "ruby.rubocop.onSave": false,
+  //   "ruby.rubocop.useBundler": false, // cannot use from docker
+
+  // GO
+  "go.formatTool": "gofmt",
+  "go.toolsManagement.autoUpdate": true,
+
+  // PYTHON
+"python.formatting.provider": "autopep8",
+  "editor.tokenColorCustomizations": {
+    "functions": "#000",
+    "comments": "#aaa",
+    "keywords": "#000",
+    "numbers": "#555",
+    "strings": "#555",
+    "types": "#000",
+    "variables": "#888",
+    "textMateRules": [
+      {
+        "scope": ["comment", "string"],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+  "workbench.colorCustomizations": {
+    /////////////////////////////////////
+    //              layout             //
+    /////////////////////////////////////
+    "terminal.ansiYellow": "#ffd900",
+    "tab.activeBorderTop": "#85cd00",
+    "tab.activeBackground": "#ffffff",
+    "tab.activeForeground": "#000000",
+    "tab.inactiveForeground": "#aaaaaa",
+    "tab.inactiveBackground": "#eeeeee",
+    "editor.lineHighlightBackground": "#eeeeee",
+    "editorLineNumber.foreground": "#c2c2c2",
+    "editorLineNumber.activeForeground": "#575757",
+    // "activityBar.border": "#333333",
+
+    /////////////////////////////////////
+    //              code               //
+    /////////////////////////////////////
+    "editorBracketHighlight.foreground1": "#8bc52d",
+    "editorBracketHighlight.foreground2": "#35b88c",
+    "editorBracketHighlight.foreground3": "#3d57eb",
+    "editorBracketHighlight.foreground4": "#6c26bd",
+    "editorBracketHighlight.foreground5": "#c23bc2",
+    "editorBracketHighlight.foreground6": "#e43a56",
+
+    "editor.selectionHighlightBorder": "#a6e496",
+    "editor.selectionHighlightBackground": "#a6e496",
+
+    "editorError.foreground": "#b31616",
+    "editorError.border": "#b31616",
+
+    "editorWarning.foreground": "#e2ac15",
+    "editorWarning.border": "#e2ac15",
+
+    "editorInfo.foreground": "#555555",
+    "editorInfo.border": "#555555ff",
+
+    "quickInputList.focusBackground": "#aaaaaa",
+    "quickInputList.focusForeground": "#000000",
+
+    "editorSelectionHighlight": "#9ff500",
+
+    "editor.findMatchBackground": "#cfe41999",
+    "editor.findMatchBorder": "#8bc52d",
+    "editor.textInputBorder": "#8bc52d",
+
+    "editor.findMatchHighlightBorder": "#8bc52d",
+    "editor.findMatchHighlightBackground": "#8bc52d22",
+
+    "editor.findRangeHighlightBackground": "#ffff00",
+    "editor.findRangeHighlightBorder": "#8bc52d22",
+
+    "todohighlight.defaultStyle": {
+      "backgroundColor": "#8bc52d",
+      "color": "#000000"
+    },
+
+    "editor.selectionBackground": "#86c4a5",
+
+    /////////////////////////////////////
+    //               git               //
+    /////////////////////////////////////
+    "editorGutter.addedBackground": "#0be779",
+    "editorGutter.modifiedBackground": "#df9d0d",
+    "editorGutter.deletedBackground": "#b31616",
+    "minimapGutter.addedBackground": "#0be779",
+    "minimapGutter.modifiedBackground": "#df9d0d",
+    "minimapGutter.deletedBackground": "#b31616",
+    // diff on click in gutter
+    "diffEditorGutter.insertedLineBackground": "#8bc52d",
+    "diffEditorGutter.removedLineBackground": "#b31616",
+    "diffEditor.insertedLineBackground": "#d9e6c5",
+    "diffEditor.removedLineBackground": "#f0d0d0",
+    // conflicts
+    "merge.incomingContentBackground": "#b7f9da",
+    "merge.currentContentBackground": "#e1c6ff"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+},
+"php.debug.executablePath": "",
+"workbench.colorTheme": "Quiet Light",
+"workbench.editor.untitled.hint": "hidden",
+"php-cs-fixer.executablePath": "${extensionPath}/php-cs-fixer.phar",
+"php-cs-fixer.lastDownload": 1671699530689,
+"phpsab.fixerArguments": [],
+"editor.tabCompletion": "on",
+"editor.formatOnSaveMode": "modifications",
+"php-cs-fixer.autoFixBySemicolon": true,
+"php-cs-fixer.documentFormattingProvider": false,
+"phpsab.snifferEnable": false,
+"editor.stickyScroll.enabled": true,
+"explorer.fileNesting.enabled": true,
+"explorer.fileNesting.patterns": {
+  "*.js": "${capture}.spec.js, ${capture}.test.js"
+},
+"editor.language.colorizedBracketPairs": [
+
+],
+"AllAutocomplete.minWordLength": 2
+}
+

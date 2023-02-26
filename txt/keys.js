@@ -26,9 +26,17 @@ document.addEventListener('keydown', e => {
     } else if (e.key === 'Escape') {
         hideShortcuts()
         e.preventDefault()
+    } else if (e.ctrlKey && e.key === 'V') {
+        pasteAsText()
+        e.preventDefault()
     }
 });
-
+document.querySelector('pre').addEventListener("paste", function (e) {
+    e.preventDefault();
+    var text = e.clipboardData.getData("text/plain");
+    document.execCommand("insertHTML", false, text);
+    console.log('copying')
+});
 
 function insertFourSpaces() {
     currentSelection = document.getSelection()
@@ -63,3 +71,5 @@ function frameText() {
         inNode.nodeValue = newContent
     }
 }
+
+function pasteAsText(){}

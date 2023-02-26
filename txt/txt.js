@@ -38,12 +38,10 @@ article.addEventListener('keyup', function (e) { localStorage[activeKey] = artic
 function createFile(filename) {
     filename = '.' + filename;
     if (localStorage.hasOwnProperty(key + filename)) {
-        alert("Name already exists!")
+        showNotification("Name already exists!")
         return
     }
     li = document.createElement('li')
-    // TODO check duplicates
-    // TODO warning if exists
     li.innerHTML = filename
     li.setAttribute('data-key', key + filename)
     initFileChanger(li)
@@ -51,7 +49,6 @@ function createFile(filename) {
 
     localStorage[key + filename] = '...'
     changeFile(li)
-    e.target.value = ''
 }
 document.querySelector('input[name = "filename"]').addEventListener('keyup', function (e) {
     if (e.keyCode === 13) { createFile(e.target.value) }
