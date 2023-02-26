@@ -11,6 +11,8 @@ alias dc='docker-compose'
 pushu() {
     git push -u origin $(git branch --show-current)
 }
+alias rebaseprogress='( RMD="$( git rev-parse --git-path \"rebase-merge/\" )" && N=$( cat "${RMD}msgnum" ) && L=$( cat "${RMD}end" ) && echo "${N} / ${L}" ; )'
+alias githard='git reset --hard origin/$(git_current_branch)'
 alias gs='gst' # ghostscript typo
 
 ### basic
@@ -119,4 +121,11 @@ mftoltx(){
 #f(){find . -name "$1"}
 alias nom="npm"
 alias sf='php bin/console'
+alias python='python3'
 alias ccat='highlight -O ansi'
+
+# usage: reducepdf "in.pdf" "out.pdf"
+reducepdf(){
+    \gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$2" "$1"
+}
+
